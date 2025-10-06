@@ -36,7 +36,7 @@ Automates:
 
 ## 🧾 Example GHCR Image
 ```
-ghcr.io/your-username/nextjs-devops-app:latest
+ghcr.io/SudheerKonduboina/nextjs-devops-app:latest
 ```
 
 ## 🧑‍💻 Author
