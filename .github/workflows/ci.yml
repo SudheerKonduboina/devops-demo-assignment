@@ -25,15 +25,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       
-      - name: Set lowercase repository owner
-        id: repo_owner
-        run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
-
-      
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ghcr.io/${{ env.owner }}/nextjs-devops-app:latest
+        run: |
+          OWNER=$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_NAME="ghcr.io/${OWNER}/nextjs-devops-app:latest"
+
+          echo "Building and pushing image: $IMAGE_NAME"
+
+          docker build -t $IMAGE_NAME -f ./Dockerfile .
+          docker push $IMAGE_NAME
